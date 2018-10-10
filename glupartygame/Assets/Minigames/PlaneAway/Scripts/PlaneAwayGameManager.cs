@@ -9,6 +9,7 @@ namespace TestProject
     {
         private List<int> m_positions;
         [SerializeField] List<GameObject> m_allplayers;
+        [SerializeField] RandomSpawner m_randomspawner;
         List<GameObject> m_currentaliveplayers;
         int m_playercount;
 
@@ -41,8 +42,10 @@ namespace TestProject
                 if(m_allplayers[p].gameObject.activeSelf == true)
                 {
                     m_currentaliveplayers.Add(m_allplayers[p]);
+                    
                 }
             }
+            m_randomspawner.playerList = m_currentaliveplayers;
 
             InputManager.Instance.BindAxis("PlaneAway_Horizontal_P0", KeyCode.D, KeyCode.A);
             InputManager.Instance.BindAxis("PlaneAway_Horizontal_P1", 0, ControllerAxisCode.LeftStickX);
@@ -68,10 +71,18 @@ namespace TestProject
 
         void OnTriggerEnter(Collider other)
         {
-            UpdateStandings(other.gameObject.GetComponent<PlayerController>().playerNumber);
-            m_currentaliveplayers.Remove(other.gameObject);
+            //Miss nog aanpassen - ff kijken
+            m_randomspawner.playerList = m_currentaliveplayers;
+
+            if(other.tag == "Tag 1")
+            {
+                UpdateStandings(other.gameObject.GetComponent<PlayerController>().playerNumber);
+                m_currentaliveplayers.Remove(other.gameObject);
+            }
         }
 
+
+        // FIX DIT !!!
         public void UpdateStandings(int playerid)
         {
             m_positions.Add(playerid);

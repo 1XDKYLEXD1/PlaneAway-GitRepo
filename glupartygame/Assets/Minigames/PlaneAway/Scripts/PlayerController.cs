@@ -15,6 +15,11 @@ namespace TestProject
         Rigidbody m_myrigibody;
         Vector3 m_movevelocity;
 
+        private float m_extramomentum;
+        public float extraMomentum { get { return (m_extramomentum); } set { m_extramomentum = value; } }
+        private float m_stun;
+        public float stunTime { get { return (m_stun); } set { m_stun = value; } }
+
         //Material m_material;
 
         void Start()
@@ -26,14 +31,31 @@ namespace TestProject
 
         void Update()
         {
+            Debug.Log("Stun + " + m_stun);
+
+
             Move(m_playernumber);
-            Jump(m_playernumber);
+
+            if (m_stun <= 0)
+            {
+                Jump(m_playernumber);
+            }
+            else
+            { m_stun -= 1 * Time.deltaTime; }
         }
 
         void Move(int playernumber)
         {
-            Vector2 moveinput = new Vector2(InputManager.Instance.GetAxis("PlaneAway_Horizontal_P" + m_playernumber), 0f);
-            m_movevelocity = (moveinput.normalized * m_movementspeed);
+            if (m_stun <= 0)
+            {
+                Vector2 moveinput = new Vector2(InputManager.Instance.GetAxis("PlaneAway_Horizontal_P" + m_playernumber), 0f);
+                m_movevelocity = (moveinput.normalized * m_movementspeed);
+                m_movevelocity.x += m_extramomentum;
+            }
+            else
+            {
+                m_movevelocity.x = m_extramomentum;
+            }
             m_myrigibody.MovePosition(m_myrigibody.position + m_movevelocity * Time.deltaTime);
         }
 
