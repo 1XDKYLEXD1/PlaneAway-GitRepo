@@ -31,6 +31,7 @@ namespace TestProject
             {
                 m_cooldowns.Add(m_debreetype[i].cooldown);
             }
+            AdjustCooldowns();
         }
         public void AdjustCooldowns()
         {
@@ -76,7 +77,7 @@ namespace TestProject
                         _boi.x + m_debreetype[m_currentType].debreeSpawnsize.x / 2 > transform.position.x + m_limit.transform.localScale.x / 2 ||
                         _boi.y + m_debreetype[m_currentType].debreeSpawnsize.y / 2 > transform.position.y + m_limit.transform.localScale.y / 2)
                     {
-
+                       
                     }
                     else
                     {
