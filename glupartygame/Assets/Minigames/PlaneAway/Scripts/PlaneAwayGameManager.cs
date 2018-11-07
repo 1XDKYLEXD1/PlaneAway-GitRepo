@@ -81,7 +81,6 @@ namespace TestProject
             }
         }
 
-
         public void UpdateStandings(int playerid)
         {
             m_positions.Add(playerid);
