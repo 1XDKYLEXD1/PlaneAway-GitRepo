@@ -82,7 +82,6 @@ namespace TestProject
         }
 
 
-        // FIX DIT !!!
         public void UpdateStandings(int playerid)
         {
             m_positions.Add(playerid);
@@ -90,6 +89,7 @@ namespace TestProject
 
         public void SubmitEndResult()
         {
+            m_positions.Reverse();
             GlobalGameManager.Instance.SubmitGameResults(m_positions);
         }
     }
