@@ -1,33 +1,42 @@
 fileFormatVersion: 2
-guid: 355cd98170b3547488bc0c811b2242f8
+guid: 0c93f01458b7bec41872103e2c1c1dab
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: pCube1
-    100004: pCube2
-    100006: pCylinder1
-    100008: pCylinder2
-    100010: pSphere1
-    100012: transform1
-    100014: transform2
-    100016: transform3
-    100018: transform4
-    400000: //RootNode
-    400002: pCube1
-    400004: pCube2
-    400006: pCylinder1
-    400008: pCylinder2
-    400010: pSphere1
-    400012: transform1
-    400014: transform2
-    400016: transform3
-    400018: transform4
-    2100000: lambert1
-    2300000: pCube2
-    3300000: pCube2
-    4300000: pCube2
+    100000: joint1
+    100002: joint10
+    100004: joint2
+    100006: joint3
+    100008: joint4
+    100010: joint5
+    100012: joint6
+    100014: joint7
+    100016: joint8
+    100018: joint9
+    100020: pDisc5
+    100022: persp1
+    100024: //RootNode
+    400000: joint1
+    400002: joint10
+    400004: joint2
+    400006: joint3
+    400008: joint4
+    400010: joint5
+    400012: joint6
+    400014: joint7
+    400016: joint8
+    400018: joint9
+    400020: pDisc5
+    400022: persp1
+    400024: //RootNode
+    2000000: persp1
+    2100000: blinn1
+    2100002: lambert2
+    2100004: lambert3
+    4300000: pDisc5
+    7400000: Take 001
     9500000: //RootNode
+    13700000: pDisc5
   externalObjects: {}
   materials:
     importMaterials: 1
