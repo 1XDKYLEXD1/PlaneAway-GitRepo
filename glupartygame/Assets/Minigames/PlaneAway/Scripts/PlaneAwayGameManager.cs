@@ -42,7 +42,6 @@ namespace TestProject
                 if(m_allplayers[p].gameObject.activeSelf == true)
                 {
                     m_currentaliveplayers.Add(m_allplayers[p]);
-                    
                 }
             }
             m_randomspawner.playerList = m_currentaliveplayers;

@@ -15,6 +15,8 @@ namespace TestProject
         Rigidbody m_myrigibody;
         Vector3 m_movevelocity;
 
+        Animator m_myanimator;
+
         private float m_extramomentum;
         public float extraMomentum { get { return (m_extramomentum); } set { m_extramomentum = value; } }
         private float m_stun;
@@ -26,13 +28,13 @@ namespace TestProject
         {
             m_movementspeed = 7;
             m_myrigibody = GetComponent<Rigidbody>();
+            m_myanimator = GetComponent<Animator>();
             //m_material = GetComponent<Material>();
         }
 
         void Update()
         {
             Debug.Log("Stun + " + m_stun);
-
 
             Move(m_playernumber);
 
@@ -48,6 +50,32 @@ namespace TestProject
         {
             if (m_stun <= 0)
             {
+
+                //If moving to the left change the rotation so that you move that way.
+                if (InputManager.Instance.GetAxis("PlaneAway_Horizontal_P" + m_playernumber) < 0)
+                {
+                    if (m_myanimator.GetInteger("PlayerAnimationState") != 2)
+                    {
+                        m_myanimator.SetInteger("PlayerAnimationState", 1);
+                    }
+                    if (transform.rotation.y > 0)
+                    {
+                        transform.Rotate(Vector3.up, -180);
+                    }
+                }
+                //Same for the right.
+                if (InputManager.Instance.GetAxis("PlaneAway_Horizontal_P" + m_playernumber) > 0)
+                {
+                    if (m_myanimator.GetInteger("PlayerAnimationState") != 2)
+                    {
+                        m_myanimator.SetInteger("PlayerAnimationState", 1);
+                    }
+                    if (transform.rotation.y < 0)
+                    {
+                        transform.Rotate(Vector3.up, 180);
+                    }
+                }
+
                 Vector2 moveinput = new Vector2(InputManager.Instance.GetAxis("PlaneAway_Horizontal_P" + m_playernumber), 0f);
                 m_movevelocity = (moveinput.normalized * m_movementspeed);
                 m_movevelocity.x += m_extramomentum;
@@ -55,7 +83,13 @@ namespace TestProject
             else
             {
                 m_movevelocity.x = m_extramomentum;
+
+                if(m_myanimator.GetInteger("PlayerAnimationState") != 2)
+                {
+                    m_myanimator.SetInteger("PlayerAnimationState", 0);
+                }
             }
+
             m_myrigibody.MovePosition(m_myrigibody.position + m_movevelocity * Time.deltaTime);
         }
 
@@ -63,6 +97,7 @@ namespace TestProject
         {
             if (InputManager.Instance.GetButton("PlaneAway_Jump_P" + playernumber) && m_onground == true)
             {
+                m_myanimator.SetInteger("PlayerAnimationState", 2);
                 m_myrigibody.velocity = new Vector3(0, 8.5f, 0);
                 m_onground = false;
             }
@@ -73,6 +108,9 @@ namespace TestProject
             if (collision.collider.CompareTag("Tag 0"))
             {
                 m_onground = true;
+
+                if(m_myanimator.GetInteger("PlayerAnimationState") != 1)
+                m_myanimator.SetInteger("PlayerAnimationState", 0);
             }
         }
 
