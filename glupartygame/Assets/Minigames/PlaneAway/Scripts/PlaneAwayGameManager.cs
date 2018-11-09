@@ -8,22 +8,27 @@ namespace PlaneAway
 {
     public class PlaneAwayGameManager : MonoBehaviour
     {
-        private List<int> m_positions;
+        List<int> m_positions;
         [SerializeField] List<GameObject> m_allplayers;
-        [SerializeField] List<Sprite> m_places;
+        [SerializeField] List<GameObject> m_disableattend;
+        [SerializeField] List<Sprite> m_placessprites;
+        [SerializeField] List<Image> m_placesimage;
         [SerializeField] List<Sprite> m_countdownnumbers;
         [SerializeField] RandomSpawner m_randomspawner;
         [SerializeField] WaitUntilTheGameCanBegin m_waittillbegin;
         [SerializeField] Image m_countdownimage;
         [SerializeField] GameObject m_spawner;
+        [SerializeField] GameObject m_gameresult;
+        [SerializeField] GameObject m_continuetext;
         List<GameObject> m_currentaliveplayers;
         int m_playercount;
 
         //Variables who are for gameplay purposes
         bool m_stopwithactivating;
         bool m_stopwithcountdown;
+        bool m_donotdoagain;
         int m_activeplayers;
-        float m_countdowntimer;
+        float m_counttimer;
 
         void Awake()
         {
@@ -41,19 +46,14 @@ namespace PlaneAway
                 //Only sets the playing players active and gives them the number they are playing as
                 //m_allplayers[i].SetActive(true);
                 m_allplayers[i].GetComponent<PlayerController>().playerNumber = i;
+                m_currentaliveplayers.Add(m_allplayers[i]);
                 //m_allplayers[i].GetComponent<PlayerController>().SetPlayerColor(GlobalGameManager.Instance.GetPlayerColor(i));
-                
+
 
                 //Binding every button per player ---- ONLY WORKS IF THERE IS NO KEYBOARD PLAYER
                 //InputManager.Instance.BindAxis("PlaneAway_Horizontal_P" + m_playercount, m_playercount, ControllerAxisCode.LeftStickX);
                 //InputManager.Instance.BindButton("PlaneAway_Jump_P" + m_playercount, m_playercount, ControllerButtonCode.A, ButtonState.OnPress);
             }
-
-            for (int p = 0; p < m_allplayers.Count; p++)
-            {               
-                m_currentaliveplayers.Add(m_allplayers[p]);               
-            }
-
             m_randomspawner.playerList = m_currentaliveplayers;
 
             InputManager.Instance.BindAxis("PlaneAway_Horizontal_P0", KeyCode.D, KeyCode.A);
@@ -112,30 +112,226 @@ namespace PlaneAway
                 if (m_stopwithactivating == true)
                 {
                     m_countdownimage.gameObject.SetActive(true);
-                    m_countdowntimer += Time.deltaTime;
+                    m_counttimer += Time.deltaTime;
 
-                    if(m_countdowntimer > 1)
+                    if(m_counttimer > 1)
                     {
                         m_countdownimage.sprite = m_countdownnumbers[1];
                     }
-                    if (m_countdowntimer > 2)
+                    if (m_counttimer > 2)
                     {
                         m_countdownimage.sprite = m_countdownnumbers[0];
                     }
-                    if(m_countdowntimer > 3)
+                    if(m_counttimer > 3)
                     {
                         m_countdownimage.gameObject.SetActive(false);
                         m_waittillbegin.LetTheGamesBegin();
                         m_spawner.SetActive(true);
                         m_stopwithcountdown = true;
+                        m_counttimer = 0f;
                     }
                 }
             }
 
             if (m_currentaliveplayers.Count < 2)
             {
-                UpdateStandings(m_currentaliveplayers[0].GetComponent<PlayerController>().playerNumber);
-                SubmitEndResult();
+                m_counttimer += Time.deltaTime;
+
+                if (m_donotdoagain == false)
+                {
+                    UpdateStandings(m_currentaliveplayers[0].GetComponent<PlayerController>().playerNumber);
+                    m_positions.Reverse();
+                    m_donotdoagain = true;
+                }
+
+                //Disable everything and enable end stuff.
+                for(int g = 0; g < m_disableattend.Count; g++)
+                {
+                    m_disableattend[g].SetActive(false);
+                }
+
+                m_gameresult.SetActive(true);
+
+                //Ook niet heel trots op maar hey het moet af :C
+                if(m_playercount == 2)
+                {
+                    if(m_counttimer > 1.5f)
+                    {
+                        if (m_positions[1] == 0)
+                        {
+                            m_placesimage[0].sprite = m_placessprites[1];
+                        }
+                        if (m_positions[1] == 1)
+                        {
+                            m_placesimage[1].sprite = m_placessprites[1];
+                        }
+                    }
+
+                    if (m_counttimer > 3f)
+                    {
+                        if (m_positions[0] == 0)
+                        {
+                            m_placesimage[0].sprite = m_placessprites[0];
+                        }
+                        if (m_positions[0] == 1)
+                        {
+                            m_placesimage[1].sprite = m_placessprites[0];
+                        }
+
+                        m_continuetext.SetActive(true);
+
+                        if (InputManager.Instance.GetButton("Start_P0"))
+                        {
+                            SubmitEndResult();
+                        }
+                    }
+                }
+                if (m_playercount == 3)
+                {
+                    if (m_counttimer > 1.5f)
+                    {
+                        if (m_positions[2] == 0)
+                        {
+                            m_placesimage[0].sprite = m_placessprites[2];
+                        }
+                        if (m_positions[2] == 1)
+                        {
+                            m_placesimage[1].sprite = m_placessprites[2];
+                        }
+                        if (m_positions[2] == 2)
+                        {
+                            m_placesimage[2].sprite = m_placessprites[2];
+                        }
+                    }
+
+                    if (m_counttimer > 3)
+                    {
+                        if (m_positions[1] == 0)
+                        {
+                            m_placesimage[0].sprite = m_placessprites[1];
+                        }
+                        if (m_positions[1] == 1)
+                        {
+                            m_placesimage[1].sprite = m_placessprites[1];
+                        }
+                        if (m_positions[1] == 2)
+                        {
+                            m_placesimage[2].sprite = m_placessprites[1];
+                        }
+                    }
+
+                    if (m_counttimer > 4.5f)
+                    {
+                        if (m_positions[0] == 0)
+                        {
+                            m_placesimage[0].sprite = m_placessprites[0];
+                        }
+                        if (m_positions[0] == 1)
+                        {
+                            m_placesimage[1].sprite = m_placessprites[0];
+                        }
+                        if (m_positions[0] == 2)
+                        {
+                            m_placesimage[2].sprite = m_placessprites[0];
+                        }
+                        m_continuetext.SetActive(true);
+
+                        if (InputManager.Instance.GetButton("Start_P0"))
+                        {
+                            SubmitEndResult();
+                        }
+                    }
+
+                }
+                if (m_playercount == 4)
+                {
+                    if (m_counttimer > 1.5f)
+                    {
+                        if (m_positions[3] == 0)
+                        {
+                            m_placesimage[0].sprite = m_placessprites[3];
+                        }
+                        if (m_positions[3] == 1)
+                        {
+                            m_placesimage[1].sprite = m_placessprites[3];
+                        }
+                        if (m_positions[3] == 2)
+                        {
+                            m_placesimage[2].sprite = m_placessprites[3];
+                        }
+                        if (m_positions[3] == 3)
+                        {
+                            m_placesimage[3].sprite = m_placessprites[3];
+                        }
+                    }
+
+                    if (m_counttimer > 3f)
+                    {
+                        if (m_positions[2] == 0)
+                        {
+                            m_placesimage[0].sprite = m_placessprites[2];
+                        }
+                        if (m_positions[2] == 1)
+                        {
+                            m_placesimage[1].sprite = m_placessprites[2];
+                        }
+                        if (m_positions[2] == 2)
+                        {
+                            m_placesimage[2].sprite = m_placessprites[2];
+                        }
+                        if (m_positions[2] == 3)
+                        {
+                            m_placesimage[3].sprite = m_placessprites[2];
+                        }
+                    }
+
+                    if (m_counttimer > 4.5f)
+                    {
+                        if (m_positions[1] == 0)
+                        {
+                            m_placesimage[0].sprite = m_placessprites[1];
+                        }
+                        if (m_positions[1] == 1)
+                        {
+                            m_placesimage[1].sprite = m_placessprites[1];
+                        }
+                        if (m_positions[1] == 2)
+                        {
+                            m_placesimage[2].sprite = m_placessprites[1];
+                        }
+                        if (m_positions[1] == 3)
+                        {
+                            m_placesimage[3].sprite = m_placessprites[1];
+                        }
+                    }
+
+                    if (m_counttimer > 6f)
+                    {
+                        if (m_positions[0] == 0)
+                        {
+                            m_placesimage[0].sprite = m_placessprites[0];
+                        }
+                        if (m_positions[0] == 1)
+                        {
+                            m_placesimage[1].sprite = m_placessprites[0];
+                        }
+                        if (m_positions[0] == 2)
+                        {
+                            m_placesimage[2].sprite = m_placessprites[0];
+                        }
+                        if (m_positions[0] == 3)
+                        {
+                            m_placesimage[3].sprite = m_placessprites[0];
+                        }
+
+                        m_continuetext.SetActive(true);
+
+                        if (InputManager.Instance.GetButton("Start_P0"))
+                        {
+                            SubmitEndResult();
+                        }
+                    }
+                }
             }
         }
 
@@ -162,7 +358,7 @@ namespace PlaneAway
 
         public void SubmitEndResult()
         {
-            m_positions.Reverse();
+            //m_positions.Reverse();
             GlobalGameManager.Instance.SubmitGameResults(m_positions);
         }
     }

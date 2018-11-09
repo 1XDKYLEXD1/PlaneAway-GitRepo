@@ -71,6 +71,7 @@ namespace PlaneAway
                         transform.Rotate(Vector3.up, -180);
                     }
                 }
+
                 //Same for the right.
                 if (InputManager.Instance.GetAxis("PlaneAway_Horizontal_P" + m_playernumber) > 0)
                 {
@@ -84,7 +85,16 @@ namespace PlaneAway
                     }
                 }
 
-                Vector2 moveinput = new Vector2(InputManager.Instance.GetAxis("PlaneAway_Horizontal_P" + m_playernumber), 0f);
+                if (InputManager.Instance.GetAxis("PlaneAway_Horizontal_P" + m_playernumber) == 0)
+                {
+                    if (m_myanimator.GetInteger("PlayerAnimationState") != 2)
+                    {
+                        m_myanimator.SetInteger("PlayerAnimationState", 0);
+                    }
+                }
+
+
+                    Vector2 moveinput = new Vector2(InputManager.Instance.GetAxis("PlaneAway_Horizontal_P" + m_playernumber), 0f);
                 m_movevelocity = (moveinput.normalized * m_movementspeed);
                 m_movevelocity.x += m_extramomentum;
             }
