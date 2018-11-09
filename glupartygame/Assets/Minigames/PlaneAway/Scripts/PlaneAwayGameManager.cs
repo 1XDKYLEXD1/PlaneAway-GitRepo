@@ -84,6 +84,10 @@ namespace TestProject
         public void UpdateStandings(int playerid)
         {
             m_positions.Add(playerid);
+            if(m_positions.Count > 0)
+            {
+                Debug.Log(playerid);
+            }
         }
 
         public void SubmitEndResult()
