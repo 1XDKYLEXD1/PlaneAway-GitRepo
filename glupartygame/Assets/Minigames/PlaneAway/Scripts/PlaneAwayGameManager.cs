@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using XBOXParty;
 
 namespace PlaneAway
@@ -9,9 +10,20 @@ namespace PlaneAway
     {
         private List<int> m_positions;
         [SerializeField] List<GameObject> m_allplayers;
+        [SerializeField] List<Sprite> m_places;
+        [SerializeField] List<Sprite> m_countdownnumbers;
         [SerializeField] RandomSpawner m_randomspawner;
+        [SerializeField] WaitUntilTheGameCanBegin m_waittillbegin;
+        [SerializeField] Image m_countdownimage;
+        [SerializeField] GameObject m_spawner;
         List<GameObject> m_currentaliveplayers;
         int m_playercount;
+
+        //Variables who are for gameplay purposes
+        bool m_stopwithactivating;
+        bool m_stopwithcountdown;
+        int m_activeplayers;
+        float m_countdowntimer;
 
         void Awake()
         {
@@ -27,7 +39,7 @@ namespace PlaneAway
                 Debug.Log("Playercount : "+m_playercount);
 
                 //Only sets the playing players active and gives them the number they are playing as
-                m_allplayers[i].SetActive(true);
+                //m_allplayers[i].SetActive(true);
                 m_allplayers[i].GetComponent<PlayerController>().playerNumber = i;
                 //m_allplayers[i].GetComponent<PlayerController>().SetPlayerColor(GlobalGameManager.Instance.GetPlayerColor(i));
                 
@@ -37,13 +49,11 @@ namespace PlaneAway
                 //InputManager.Instance.BindButton("PlaneAway_Jump_P" + m_playercount, m_playercount, ControllerButtonCode.A, ButtonState.OnPress);
             }
 
-            for (int p = 0; p < m_allplayers.Count ; p++)
-            {
-                if(m_allplayers[p].gameObject.activeSelf == true)
-                {
-                    m_currentaliveplayers.Add(m_allplayers[p]);
-                }
+            for (int p = 0; p < m_allplayers.Count; p++)
+            {               
+                m_currentaliveplayers.Add(m_allplayers[p]);               
             }
+
             m_randomspawner.playerList = m_currentaliveplayers;
 
             InputManager.Instance.BindAxis("PlaneAway_Horizontal_P0", KeyCode.D, KeyCode.A);
@@ -60,6 +70,67 @@ namespace PlaneAway
         void Update()
         {
             Debug.Log("How many players alive? " + m_currentaliveplayers.Count);
+
+            //Lelijk gecodeerd xD
+            if(m_stopwithactivating == false)
+            {
+                if(m_waittillbegin.WaitTimer > 1.5f && m_playercount > 0)
+                {
+                    m_allplayers[0].SetActive(true);
+                }
+
+                if (m_waittillbegin.WaitTimer > 3f && m_playercount > 1)
+                {
+                    m_allplayers[1].SetActive(true);
+                    if(m_playercount == 2)
+                    {
+                        m_stopwithactivating = true;
+                    }
+                }
+
+                if (m_waittillbegin.WaitTimer > 4.5f && m_playercount > 2)
+                {
+                    m_allplayers[2].SetActive(true);
+                    if (m_playercount == 3)
+                    {
+                        m_stopwithactivating = true;
+                    }
+                }
+
+                if (m_waittillbegin.WaitTimer > 6f && m_playercount > 3)
+                {
+                    m_allplayers[3].SetActive(true);
+                    if (m_playercount == 4)
+                    {
+                        m_stopwithactivating = true;
+                    }
+                }
+            }
+
+            if(m_stopwithcountdown == false)
+            {
+                if (m_stopwithactivating == true)
+                {
+                    m_countdownimage.gameObject.SetActive(true);
+                    m_countdowntimer += Time.deltaTime;
+
+                    if(m_countdowntimer > 1)
+                    {
+                        m_countdownimage.sprite = m_countdownnumbers[1];
+                    }
+                    if (m_countdowntimer > 2)
+                    {
+                        m_countdownimage.sprite = m_countdownnumbers[0];
+                    }
+                    if(m_countdowntimer > 3)
+                    {
+                        m_countdownimage.gameObject.SetActive(false);
+                        m_waittillbegin.LetTheGamesBegin();
+                        m_spawner.SetActive(true);
+                        m_stopwithcountdown = true;
+                    }
+                }
+            }
 
             if (m_currentaliveplayers.Count < 2)
             {
