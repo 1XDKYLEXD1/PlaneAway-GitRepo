@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace TestProject
+namespace PlaneAway
 {
     public class RandomSpawner : MonoBehaviour
     {

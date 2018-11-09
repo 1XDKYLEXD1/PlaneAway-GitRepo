@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XBOXParty;
 
-namespace TestProject
+namespace PlaneAway
 {
     public class PlayerController : MonoBehaviour
     {
@@ -17,6 +17,8 @@ namespace TestProject
 
         Animator m_myanimator;
 
+        WaitUntilTheGameCanBegin m_waitforbegin;
+
         private float m_extramomentum;
         public float extraMomentum { get { return (m_extramomentum); } set { m_extramomentum = value; } }
         private float m_stun;
@@ -29,21 +31,27 @@ namespace TestProject
             m_movementspeed = 7;
             m_myrigibody = GetComponent<Rigidbody>();
             m_myanimator = GetComponent<Animator>();
+            m_waitforbegin = GameObject.FindObjectOfType<WaitUntilTheGameCanBegin>();
             //m_material = GetComponent<Material>();
+
+            m_myrigibody.useGravity = false;
         }
 
         void Update()
         {
-            Debug.Log("Stun + " + m_stun);
-
-            Move(m_playernumber);
-
-            if (m_stun <= 0)
+            if(m_waitforbegin.CanIBeginYet == true)
             {
-                Jump(m_playernumber);
+                m_myrigibody.useGravity = true;
+
+                Move(m_playernumber);
+
+                if (m_stun <= 0)
+                {
+                    Jump(m_playernumber);
+                }
+                else
+                { m_stun -= 1 * Time.deltaTime; }
             }
-            else
-            { m_stun -= 1 * Time.deltaTime; }
         }
 
         void Move(int playernumber)

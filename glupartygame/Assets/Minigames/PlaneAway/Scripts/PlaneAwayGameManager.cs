@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XBOXParty;
 
-namespace TestProject
+namespace PlaneAway
 {
     public class PlaneAwayGameManager : MonoBehaviour
     {

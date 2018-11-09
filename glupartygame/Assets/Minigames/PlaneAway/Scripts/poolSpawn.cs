@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TestProject
+namespace PlaneAway
 {
     public class poolSpawn : MonoBehaviour
     {
@@ -46,7 +46,7 @@ namespace TestProject
                 {
                     m_pooledItems[i].transform.position = itemPosition;
                     m_pooledItems[i].transform.rotation = itemRotation;
-                    m_pooledItems[i].GetComponent<Debree>()._mybuilder = deberd;
+                    m_pooledItems[i].GetComponent<Debree>(  )._mybuilder = deberd;
                     m_pooledItems[i].transform.SetParent(parent);
                     m_pooledItems[i].SetActive(true);
                     break;

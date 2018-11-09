@@ -1,20 +1,16 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
 guid: cc5c00717ff0ddf4eb396d1fc450f4ed
-=======
-guid: c04a9f02d41a55243bf08d62aaa31bba
->>>>>>> 5af85accba85bb0933e56ea3c3ab03fcc842509d
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: P4_Score
+    21300002: P1_Score
+    21300004: P3_Score
+    21300006: P2_Score
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
     mipMapMode: 0
-<<<<<<< HEAD
-    enableMipMap: 1
-=======
     enableMipMap: 0
->>>>>>> 5af85accba85bb0933e56ea3c3ab03fcc842509d
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -42,15 +38,6 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -100
-<<<<<<< HEAD
-    wrapU: -1
-    wrapV: -1
-    wrapW: -1
-  nPOTScale: 1
-  lightmap: 0
-  compressionQuality: 50
-  spriteMode: 0
-=======
     wrapU: 1
     wrapV: 1
     wrapW: -1
@@ -58,7 +45,6 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
->>>>>>> 5af85accba85bb0933e56ea3c3ab03fcc842509d
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -67,15 +53,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-<<<<<<< HEAD
-  alphaIsTransparency: 0
-  spriteTessellationDetail: -1
-  textureType: 0
-=======
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
->>>>>>> 5af85accba85bb0933e56ea3c3ab03fcc842509d
   textureShape: 1
   singleChannelComponent: 0
   maxTextureSizeSet: 0
@@ -93,8 +73,6 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-<<<<<<< HEAD
-=======
   - serializedVersion: 2
     buildTarget: Standalone
     maxTextureSize: 2048
@@ -117,14 +95,93 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
->>>>>>> 5af85accba85bb0933e56ea3c3ab03fcc842509d
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: P4_Score
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 4
+        width: 103
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02c34fc264f5e4549ad5192a4dcbe5b2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: P1_Score
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 2
+        width: 105
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6017d76c1fafe4f46b1ded25590e94c7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: P3_Score
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 2
+        width: 106
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1c352af031a0344fb60d1e925bcda47
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: P2_Score
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 4
+        width: 105
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a699a7d0d07400f43a1f274a8c279bcc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: aa19a5a611ed59042b54ad2306105293
     vertices: []
     indices: 
     edges: []
