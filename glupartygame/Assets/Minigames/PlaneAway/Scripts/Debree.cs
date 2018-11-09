@@ -23,7 +23,8 @@ namespace TestProject
         }
         private void OnEnable()
         {
-            gameObject.GetComponent<Renderer>().material = mybuilder.debreeTexture;
+            //<Deze moest heel even weg omdat de meeuw al een texture heeft :o>
+            //gameObject.GetComponent<Renderer>().material = mybuilder.debreeTexture;
             debreespeed = mybuilder.flightSpeed;
             stunlgth = mybuilder.stunDuration;
         }
